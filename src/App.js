@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Text from "./Text";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getContact } from "./store/action";
 
 function App() {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state);
+  console.log(data);
+  useEffect(() => {
+    dispatch(getContact());
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Redux
+      <div>
+        {data.data &&
+          data.data.map((item, index) => {
+            return (
+              <div key={index}>
+                <p>{item.firstName}</p>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
